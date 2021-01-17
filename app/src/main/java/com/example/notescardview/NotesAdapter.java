@@ -31,6 +31,16 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         holder.textViewDescription.setText(note.getDescription());
         holder.textViewDayOfWeek.setText(note.getDayOfWeek());
         holder.textViewPriority.setText(String.format("%s",note.getPriority()));
+        switch (note.getPriority()){
+            case 1:
+                holder.textViewTitle.setBackgroundColor(holder.itemView.getResources().getColor(R.color.red));
+                break;
+            case 2:
+                holder.textViewTitle.setBackgroundColor(holder.itemView.getResources().getColor(R.color.orange));
+                break;
+            case 3:
+                holder.textViewTitle.setBackgroundColor(holder.itemView.getResources().getColor(R.color.green));
+        }
 
     }
 
@@ -45,6 +55,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         private TextView textViewDescription;
         private TextView textViewDayOfWeek;
         private TextView textViewPriority;
+        //private TextView getTextViewDayOfWeekIs;
 
 
         public NotesViewHolder(@NonNull View itemView) {
@@ -54,6 +65,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
             textViewDayOfWeek = itemView.findViewById(R.id.textViewDayOfWeek);
             textViewPriority = itemView.findViewById(R.id.textViewPriority);
+            //getTextViewDayOfWeekIs = itemView.findViewById(R.id.textViewDayIs);
 
         }
     }

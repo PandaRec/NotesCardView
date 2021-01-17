@@ -23,6 +23,14 @@ public class MainActivity extends AppCompatActivity {
         notes.add(new Note("второе название","второе описание", "вторник",1));
         notes.add(new Note("третье название","третье описание", "среда",3));
         notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
+        notes.add(new Note("первое название","первое описание", "Понедельник",2));
+        notes.add(new Note("второе название","второе описание", "вторник",1));
+        notes.add(new Note("третье название","третье описание", "среда",3));
+        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
+        notes.add(new Note("первое название","первое описание", "Понедельник",2));
+        notes.add(new Note("второе название","второе описание", "вторник",1));
+        notes.add(new Note("третье название","третье описание", "среда",3));
+        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
 
         NotesAdapter adapter = new NotesAdapter(notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

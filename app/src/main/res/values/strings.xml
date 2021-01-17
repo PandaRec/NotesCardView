@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NotesCardView</string>
+    <string name="DayOfWeekIs">День недели:</string>
 </resources>
