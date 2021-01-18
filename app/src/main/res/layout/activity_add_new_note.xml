@@ -10,7 +10,9 @@
         android:id="@+id/editTextAddTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:ems="10"
+        android:textSize="16sp"
         android:hint="@string/hint_enter_title"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +23,9 @@
         android:id="@+id/editTextAddDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:ems="10"
+        android:textSize="16sp"
         android:gravity="start|top"
         android:hint="@string/hint_enter_description"
         android:inputType="textMultiLine"
@@ -33,6 +37,7 @@
         android:id="@+id/spinnerAddDayOfWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:entries="@array/day_of_week"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +47,7 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,30 +55,50 @@
         tools:ignore="MissingConstraints">
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/radioButtonHigh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            android:background="@color/red"
+            android:paddingEnd="12dp"
+            android:text="@string/priority_high"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"/>
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioButtonMiddle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            android:background="@color/orange"
+            android:paddingEnd="12dp"
+            android:text="@string/priority_middle"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"/>
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioButtonLow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            android:background="@color/green"
+            android:paddingEnd="12dp"
+            android:text="@string/priority_low"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"/>
     </RadioGroup>
 
     <Button
         android:id="@+id/buttonAddNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_margin="8dp"
+        android:text="@string/button_add_note"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        android:onClick="onClickButtonAddPressed"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

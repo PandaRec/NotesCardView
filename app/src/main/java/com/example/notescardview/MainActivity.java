@@ -12,7 +12,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<Note> notes;
+    public static final ArrayList<Note> notes = new ArrayList<>();
     private RecyclerView recyclerView;
 
     @Override
@@ -20,19 +20,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
-        notes = new ArrayList<>();
-        notes.add(new Note("первое название","первое описание", "Понедельник",2));
-        notes.add(new Note("второе название","второе описание", "вторник",1));
-        notes.add(new Note("третье название","третье описание", "среда",3));
-        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
-        notes.add(new Note("первое название","первое описание", "Понедельник",2));
-        notes.add(new Note("второе название","второе описание", "вторник",1));
-        notes.add(new Note("третье название","третье описание", "среда",3));
-        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
-        notes.add(new Note("первое название","первое описание", "Понедельник",2));
-        notes.add(new Note("второе название","второе описание", "вторник",1));
-        notes.add(new Note("третье название","третье описание", "среда",3));
-        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
+
+        if(notes.isEmpty()) {
+            notes.add(new Note("первое название", "первое описание", "Понедельник", 2));
+            notes.add(new Note("второе название", "второе описание", "вторник", 1));
+            notes.add(new Note("третье название", "третье описание", "среда", 3));
+        }
+//        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
+//        notes.add(new Note("первое название","первое описание", "Понедельник",2));
+//        notes.add(new Note("второе название","второе описание", "вторник",1));
+//        notes.add(new Note("третье название","третье описание", "среда",3));
+//        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
+//        notes.add(new Note("первое название","первое описание", "Понедельник",2));
+//        notes.add(new Note("второе название","второе описание", "вторник",1));
+//        notes.add(new Note("третье название","третье описание", "среда",3));
+//        notes.add(new Note("четвертое название","четвертое описание", "четверг",2));
 
         NotesAdapter adapter = new NotesAdapter(notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

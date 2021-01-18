@@ -6,6 +6,7 @@
     <string name="priority_low">Низкий</string>
     <string name="hint_enter_title">Введите название</string>
     <string name="hint_enter_description">Введите описание заметки</string>
+    <string name="button_add_note">Добавить заметку</string>
 
     <string-array name="day_of_week">
         <item>Понедельник</item>
