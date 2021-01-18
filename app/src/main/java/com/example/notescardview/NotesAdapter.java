@@ -29,17 +29,21 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         Note note = notes.get(position);
         holder.textViewTitle.setText(note.getTitle());
         holder.textViewDescription.setText(note.getDescription());
-        holder.textViewDayOfWeek.setText(note.getDayOfWeek());
-        holder.textViewPriority.setText(String.format("%s",note.getPriority()));
+        holder.textViewDayOfWeek.setText(String.format(" %s",note.getDayOfWeek()));
+        //holder.textViewPriority.setText(String.format("%s",note.getPriority()));
         switch (note.getPriority()){
             case 1:
                 holder.textViewTitle.setBackgroundColor(holder.itemView.getResources().getColor(R.color.red));
+                holder.textViewPriority.setText(String.format("Приоритет - %s",holder.itemView.getResources().getString(R.string.priority_high)));
                 break;
             case 2:
                 holder.textViewTitle.setBackgroundColor(holder.itemView.getResources().getColor(R.color.orange));
+                holder.textViewPriority.setText(String.format("Приоритет - %s",holder.itemView.getResources().getString(R.string.priority_middle)));
                 break;
             case 3:
                 holder.textViewTitle.setBackgroundColor(holder.itemView.getResources().getColor(R.color.green));
+                holder.textViewPriority.setText(String.format("Приоритет - %s",holder.itemView.getResources().getString(R.string.priority_low)));
+                break;
         }
 
     }
