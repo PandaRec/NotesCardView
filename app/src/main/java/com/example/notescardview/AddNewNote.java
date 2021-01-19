@@ -16,9 +16,6 @@ public class AddNewNote extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextDescription;
     private Spinner spinnerDaOfWeek;
-    private RadioButton radioButtonHigh;
-    private RadioButton radioButtonMiddle;
-    private RadioButton radioButtonLow;
     private RadioGroup radioGroup;
 
     private String newTitle;
@@ -36,9 +33,6 @@ public class AddNewNote extends AppCompatActivity {
         editTextTitle = findViewById(R.id.editTextAddTitle);
         editTextDescription = findViewById(R.id.editTextAddDescription);
         spinnerDaOfWeek = findViewById(R.id.spinnerAddDayOfWeek);
-        radioButtonHigh = findViewById(R.id.radioButtonHigh);
-        radioButtonMiddle = findViewById(R.id.radioButtonMiddle);
-        radioButtonLow = findViewById(R.id.radioButtonLow);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
 
