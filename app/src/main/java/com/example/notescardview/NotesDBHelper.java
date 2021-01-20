@@ -3,12 +3,13 @@ package com.example.notescardview;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 public class NotesDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME="notes.db";
-    private static final int DB_VERSION=1;
+    private static final int DB_VERSION=2;
 
     public NotesDBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -17,6 +18,7 @@ public class NotesDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(NotesContract.NoteEntry.CREATE_COMMAND);
+        Log.i("hello","hello");
 
     }
 
@@ -24,6 +26,8 @@ public class NotesDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(NotesContract.NoteEntry.DROP_COMMAND);
         onCreate(db);
+        Log.i("hello","hello2");
+
 
     }
 }

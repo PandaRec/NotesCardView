@@ -33,14 +33,15 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new NotesDBHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        Log.i("f","f");
+        Log.i("f",NotesContract.NoteEntry.CREATE_COMMAND);
 
-        if(notes.isEmpty()) {
-            notes.add(new Note("первое название", "первое описание", "Понедельник", 2));
-            notes.add(new Note("второе название", "второе описание", "вторник", 1));
-            notes.add(new Note("третье название", "третье описание", "среда", 3));
-        }
-/*
+
+//        if(notes.isEmpty()) {
+//            notes.add(new Note("первое название", "первое описание", "Понедельник", 2));
+//            notes.add(new Note("второе название", "второе описание", "вторник", 1));
+//            notes.add(new Note("третье название", "третье описание", "среда", 3));
+//        }
+
         for(Note note:notes){
             ContentValues contentValues = new ContentValues();
             contentValues.put(NotesContract.NoteEntry.COLUMN_TITLE,note.getTitle());
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             contentValues.put(NotesContract.NoteEntry.COLUMN_PRIORITY,note.getPriority());
             database.insert(NotesContract.NoteEntry.TABLE_NAME,null,contentValues);
         }
+        Log.i("f","f");
 
         Cursor cursor = database.query(NotesContract.NoteEntry.TABLE_NAME,null,null,null,null,null,null);
         ArrayList<Note> notesDB = new ArrayList<>();
@@ -60,10 +62,12 @@ public class MainActivity extends AppCompatActivity {
             notesDB.add(new Note(title,descr,dayOfWeek,priority));
         }
         cursor.close();
-        */
 
 
-        adapter = new NotesAdapter(notes);
+
+
+
+        adapter = new NotesAdapter(notesDB);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
