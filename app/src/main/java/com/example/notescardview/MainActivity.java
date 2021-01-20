@@ -20,10 +20,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public static final ArrayList<Note> notes = new ArrayList<>();
+    public static final ArrayList<Note> notesDB = new ArrayList<>();
     private RecyclerView recyclerView;
     private NotesAdapter adapter;
     private NotesDBHelper dbHelper;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +32,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
         dbHelper = new NotesDBHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        database = dbHelper.getWritableDatabase();
 
-        Log.i("f",NotesContract.NoteEntry.CREATE_COMMAND);
-
-
-//        if(notes.isEmpty()) {
-//            notes.add(new Note("первое название", "первое описание", "Понедельник", 2));
-//            notes.add(new Note("второе название", "второе описание", "вторник", 1));
-//            notes.add(new Note("третье название", "третье описание", "среда", 3));
-//        }
-
-        for(Note note:notes){
+        /*
+        for(Note note:notesDB){
             ContentValues contentValues = new ContentValues();
             contentValues.put(NotesContract.NoteEntry.COLUMN_TITLE,note.getTitle());
             contentValues.put(NotesContract.NoteEntry.COLUMN_DESCRIPTION,note.getDescription());
@@ -50,18 +43,10 @@ public class MainActivity extends AppCompatActivity {
             contentValues.put(NotesContract.NoteEntry.COLUMN_PRIORITY,note.getPriority());
             database.insert(NotesContract.NoteEntry.TABLE_NAME,null,contentValues);
         }
-        Log.i("f","f");
+        */
 
-        Cursor cursor = database.query(NotesContract.NoteEntry.TABLE_NAME,null,null,null,null,null,null);
-        ArrayList<Note> notesDB = new ArrayList<>();
-        while (cursor.moveToNext()){
-            String title = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_TITLE));
-            String descr = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_DESCRIPTION));
-            String dayOfWeek = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_DAY_OF_WEEK));
-            int priority = cursor.getInt(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_PRIORITY));
-            notesDB.add(new Note(title,descr,dayOfWeek,priority));
-        }
-        cursor.close();
+
+        getDataFromDB();
 
 
 
@@ -99,12 +84,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void removeItem(int position){
-        notes.remove(position);
+        int id = notesDB.get(position).getId();
+        String where=NotesContract.NoteEntry._ID + "= ?";
+        String[] whereArgs = new String[]{Integer.toString(id)};
+        database.delete(NotesContract.NoteEntry.TABLE_NAME,where,whereArgs);
+        getDataFromDB();
         adapter.notifyDataSetChanged();
     }
 
     public void onClickButtonPressed(View view) {
         Intent intent = new Intent(this,AddNewNote.class);
         startActivity(intent);
+    }
+
+    private void getDataFromDB(){
+        notesDB.clear();
+        Cursor cursor = database.query(NotesContract.NoteEntry.TABLE_NAME,null,null,null,null,null,null);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(NotesContract.NoteEntry._ID));
+            String title = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_TITLE));
+            String descr = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_DESCRIPTION));
+            String dayOfWeek = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_DAY_OF_WEEK));
+            int priority = cursor.getInt(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_PRIORITY));
+            notesDB.add(new Note(id,title,descr,dayOfWeek,priority));
+        }
+        cursor.close();
     }
 }

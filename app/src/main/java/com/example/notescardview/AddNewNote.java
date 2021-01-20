@@ -2,7 +2,9 @@ package com.example.notescardview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,9 @@ public class AddNewNote extends AppCompatActivity {
     private String newDayOfWeek;
     private int newPriority;
 
+    private NotesDBHelper dbHelper;
+    private SQLiteDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,8 @@ public class AddNewNote extends AppCompatActivity {
         editTextDescription = findViewById(R.id.editTextAddDescription);
         spinnerDaOfWeek = findViewById(R.id.spinnerAddDayOfWeek);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        dbHelper = new NotesDBHelper(this);
+        database = dbHelper.getWritableDatabase();
 
 
 
@@ -63,13 +70,20 @@ public class AddNewNote extends AppCompatActivity {
     }
 
     public void onClickButtonAddPressed(View view) {
-        Log.i("my","pressed");
 
         newTitle=editTextTitle.getText().toString();
         newDescription = editTextDescription.getText().toString();
         newDayOfWeek = spinnerDaOfWeek.getSelectedItem().toString();
 
-        MainActivity.notes.add(new Note(newTitle,newDescription,newDayOfWeek,newPriority));
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NotesContract.NoteEntry.COLUMN_TITLE,newTitle);
+        contentValues.put(NotesContract.NoteEntry.COLUMN_DESCRIPTION,newDescription);
+        contentValues.put(NotesContract.NoteEntry.COLUMN_DAY_OF_WEEK,newDayOfWeek);
+        contentValues.put(NotesContract.NoteEntry.COLUMN_PRIORITY,newPriority);
+        database.insert(NotesContract.NoteEntry.TABLE_NAME,null,contentValues);
+
+
+
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
