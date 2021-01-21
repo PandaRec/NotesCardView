@@ -9,9 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
-    ArrayList <Note> notes;
+    List<Note> notes;
     private OnNoteClickListener onNoteClickListener;
 
     public void setOnNoteClickListener(OnNoteClickListener onNoteClickListener) {
@@ -70,7 +71,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         private TextView textViewDescription;
         private TextView textViewDayOfWeek;
         private TextView textViewPriority;
-        //private TextView getTextViewDayOfWeekIs;
 
 
         public NotesViewHolder(@NonNull View itemView) {
@@ -80,7 +80,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
             textViewDayOfWeek = itemView.findViewById(R.id.textViewDayOfWeek);
             textViewPriority = itemView.findViewById(R.id.textViewPriority);
-            //getTextViewDayOfWeekIs = itemView.findViewById(R.id.textViewDayIs);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -99,5 +98,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             });
 
         }
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+        notifyDataSetChanged();
+    }
+
+    public List<Note> getNotes() {
+        return notes;
     }
 }

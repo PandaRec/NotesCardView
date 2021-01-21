@@ -2,6 +2,10 @@ package com.example.notescardview;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public static final ArrayList<Note> notes = new ArrayList<>();
     private RecyclerView recyclerView;
     private NotesAdapter adapter;
-    private NotesDatabase database;
+    private MainViewModel mainViewModel;
+    //private NotesDatabase database;
     //private NotesDBHelper dbHelper;
     //SQLiteDatabase database;
 
@@ -28,11 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
 
-        database = NotesDatabase.getInstance(this);
-        //dbHelper = new NotesDBHelper(this);
-        //database = dbHelper.getWritableDatabase();
+        mainViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(MainViewModel.class);
 
-       // getDataFromDB();
         getData();
 
 
@@ -71,10 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void removeItem(int position){
-        Note note = notes.get(position);
-        database.notesDao().deleteNote(note);
-        getData();
-        adapter.notifyDataSetChanged();
+        Note note = adapter.getNotes().get(position);
+        mainViewModel.deleteNote(note);
     }
 
     public void onClickButtonPressed(View view) {
@@ -82,23 +82,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    private void getDataFromDB(){
-//        notesDB.clear();
-//        Cursor cursor = database.query(NotesContract.NoteEntry.TABLE_NAME,null,null,null,null,null,null);
-//        while (cursor.moveToNext()){
-//            int id = cursor.getInt(cursor.getColumnIndex(NotesContract.NoteEntry._ID));
-//            String title = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_TITLE));
-//            String descr = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_DESCRIPTION));
-//            String dayOfWeek = cursor.getString(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_DAY_OF_WEEK));
-//            int priority = cursor.getInt(cursor.getColumnIndex(NotesContract.NoteEntry.COLUMN_PRIORITY));
-//            notesDB.add(new Note(id,title,descr,dayOfWeek,priority));
-//        }
-//        cursor.close();
-//    }
+
 
     private void getData(){
-        List<Note> notesFromDB = database.notesDao().getAllNotes();
-        notes.clear();
-        notes.addAll(notesFromDB);
+        LiveData<List<Note>> notesFromDB = mainViewModel.getNotes();
+        notesFromDB.observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notesFromLiveData) {
+                adapter.setNotes(notesFromLiveData);
+            }
+        });
+
     }
 }

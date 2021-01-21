@@ -1,6 +1,7 @@
 package com.example.notescardview;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -25,10 +26,7 @@ public class AddNewNote extends AppCompatActivity {
     private String newDayOfWeek;
     private int newPriority;
 
-    private NotesDatabase database;
-
-   // private NotesDBHelper dbHelper;
-    //private SQLiteDatabase database;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +40,8 @@ public class AddNewNote extends AppCompatActivity {
         spinnerDaOfWeek = findViewById(R.id.spinnerAddDayOfWeek);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
-        database = NotesDatabase.getInstance(this);
-        //dbHelper = new NotesDBHelper(this);
-        //database = dbHelper.getWritableDatabase();
+        mainViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(MainViewModel.class);
+
 
 
 
@@ -79,17 +76,8 @@ public class AddNewNote extends AppCompatActivity {
         newDescription = editTextDescription.getText().toString();
         newDayOfWeek = spinnerDaOfWeek.getSelectedItem().toString();
 
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(NotesContract.NoteEntry.COLUMN_TITLE,newTitle);
-//        contentValues.put(NotesContract.NoteEntry.COLUMN_DESCRIPTION,newDescription);
-//        contentValues.put(NotesContract.NoteEntry.COLUMN_DAY_OF_WEEK,newDayOfWeek);
-//        contentValues.put(NotesContract.NoteEntry.COLUMN_PRIORITY,newPriority);
-//        database.insert(NotesContract.NoteEntry.TABLE_NAME,null,contentValues);
         Note note = new Note(newTitle,newDescription,newDayOfWeek,newPriority);
-        database.notesDao().insertNote(note);
-
-
-
+        mainViewModel.insertNote(note);
 
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
